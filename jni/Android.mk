@@ -17,6 +17,10 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := hello-jni
-LOCAL_SRC_FILES := hello-jni.c
+LOCAL_SRC_FILES := hello-jni.cpp
+
+LOCAL_CC := clang
+#LOCAL_C_INCLUDES := /Users/zhuxiaomeng/Desktop/3rdParty/v8/v8
+#LOCAL_LDLIBS := -L/Users/zhuxiaomeng/Desktop/3rdParty/v8/v8/out/android_arm.release/obj.target/tools/gyp -lv8_base -lv8_libbase -lv8_libplatform -lv8_nosnapshot
 
 include $(BUILD_SHARED_LIBRARY)

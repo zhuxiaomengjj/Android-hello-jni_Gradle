@@ -9,15 +9,27 @@ buildscript {
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-    compile fileTree(dir: "libs/armeabi", include: '*/so')
-    //compile project(':cocos2d:cocos:platform:android:java')
+task nativeLibsToJar(type: Zip, dependsOn: 'ndkBuild', description: 'Create a JAR of the native libs') {  
+    destinationDir new File(buildDir, 'libs')
+    baseName 'ndk-libs'
+    extension 'jar'
+    from(new File(buildDir, 'libs')) { include '**/*.so' }
+    into 'lib/'
 }
 
+tasks.withType(JavaCompile) {
+    compileTask -> compileTask.dependsOn(nativeLibsToJar)
+}
 // 编译so动态库
 task ndkBuild(type: Exec) {
-    commandLine '$NDK_ROOT/ndk-build'
+    println '"$System.env.NDK_ROOT/ndk-build'
+    commandLine "$System.env.NDK_ROOT/" + 'ndk-build'
+}
+
+dependencies { 
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile fileTree(dir: "libs/armeabi", include: '*/so')
+    compile fileTree(dir: "libs/armeabi-v7a", include: '*/so')
 }
 
 android {
