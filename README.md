@@ -13,4 +13,4 @@ Gradle build
 How to package and install
 =============
 1. plugin your android device
-2. 'gradle installDebug'
+2. `gradle installDebug`
